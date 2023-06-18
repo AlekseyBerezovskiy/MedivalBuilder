@@ -1,4 +1,4 @@
-# ---> Unity
+﻿# ---> Unity
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
@@ -25,5 +25,3 @@ sysinfo.txt
 
 UserSettings/Layouts
 Logs
-pxr_driver_sdk.log
-pxr_driver_sdk.log
