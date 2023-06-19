@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace MedivalBuilder.Characters
+namespace MedivalBuilder.Characters.Realization
 {
     public class CharacterView : MonoBehaviour
     {

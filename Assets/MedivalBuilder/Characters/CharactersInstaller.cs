@@ -1,6 +1,4 @@
-﻿using MedivalBuilder.Characters.StateMachine;
-using MedivalBuilder.Characters.StateMachine.Interfaces;
-using Zenject;
+﻿using Zenject;
 
 namespace MedivalBuilder.Characters
 {
@@ -8,10 +6,7 @@ namespace MedivalBuilder.Characters
     {
         public override void InstallBindings()
         {
-            Container
-                .Bind<ICharacterStateMachine>()
-                .To<CharacterStateMachine>()
-                .AsSingle();
+            
         }
     }
 }
