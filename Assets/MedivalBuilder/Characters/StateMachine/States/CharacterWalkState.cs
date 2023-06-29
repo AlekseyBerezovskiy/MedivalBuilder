@@ -36,11 +36,15 @@ namespace MedivalBuilder.Characters.StateMachine.States
 
             _characterView.OnTriggerEnterEvent += OnTriggerEnter;
             
+            _characterView.NavMeshAgent.isStopped = false;
+            
             _characterView.NavMeshAgent.SetDestination(_targetPosition);
         }
 
         public override void OnExit()
         {
+            _characterView.NavMeshAgent.isStopped = true;
+            
             _characterView.OnTriggerEnterEvent -= OnTriggerEnter;
         }
 
