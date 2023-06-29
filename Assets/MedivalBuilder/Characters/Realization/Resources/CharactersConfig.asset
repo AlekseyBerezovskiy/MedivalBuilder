@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: CharactersConfig
   m_EditorClassIdentifier: 
   data:
-    Speed: 5
+    Speed: 1
+    AngularSpeed: 160

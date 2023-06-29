@@ -13,5 +13,6 @@ namespace MedivalBuilder.Characters.Factory
     public struct CharactersData
     {
         public float Speed;
+        public float AngularSpeed;
     }
 }

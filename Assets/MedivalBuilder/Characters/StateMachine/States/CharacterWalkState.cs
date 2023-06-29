@@ -12,8 +12,6 @@ namespace MedivalBuilder.Characters.StateMachine.States
         public event Action OnEndWalkEvent;
         
         private CharacterView _characterView;
-        private CharactersData _charactersData;
-        private Tween _moveTween;
         private Vector3 _targetPosition;
         
         public CharacterWalkState(
@@ -27,39 +25,33 @@ namespace MedivalBuilder.Characters.StateMachine.States
             CharactersData charactersData)
         {
             _characterView = characterView;
-            _charactersData = charactersData;
+
+            _characterView.NavMeshAgent.speed = charactersData.Speed;
+            _characterView.NavMeshAgent.angularSpeed = charactersData.AngularSpeed;
         }
         
         public override void OnEntry()
         {
-            if (_targetPosition != Vector3.zero)
-            {
-                CharacterAnimationController.SetAnimation(CharacterStateType.Walk);
-                
-                _moveTween = _characterView.transform.DOMove(
-                    _targetPosition,
-                    Vector3.Distance(
-                        _characterView.transform.position, 
-                        _targetPosition) 
-                    * _charactersData.Speed)
-                    .OnComplete(() =>
-                    {
-                        OnEndWalkEvent?.Invoke();
-                    });
-            }
+            CharacterAnimationController.SetAnimation(CharacterStateType.Walk);
+
+            _characterView.OnTriggerEnterEvent += OnTriggerEnter;
+            
+            _characterView.NavMeshAgent.SetDestination(_targetPosition);
         }
 
         public override void OnExit()
         {
-            _targetPosition = Vector3.zero;
-            
-            _moveTween?.Kill();
-            _moveTween = null;
+            _characterView.OnTriggerEnterEvent -= OnTriggerEnter;
         }
 
         public void SetTarget(Vector3 targetPosition)
         {
             _targetPosition = targetPosition;
+        }
+
+        private void OnTriggerEnter(Collider collision)
+        {
+            OnEndWalkEvent?.Invoke();
         }
     }
 }
