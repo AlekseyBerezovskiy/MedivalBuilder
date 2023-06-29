@@ -1,4 +1,5 @@
 ﻿using MedivalBuilder.Characters;
+using MedivalBuilder.Task;
 using Zenject;
 
 namespace MedivalBuilder.Application
@@ -8,6 +9,8 @@ namespace MedivalBuilder.Application
         public override void InstallBindings()
         {
             ApplicationModules.Install(Container);
+            
+            TaskInstaller.Install(Container);
             
             CharactersInstaller.Install(Container);
             
