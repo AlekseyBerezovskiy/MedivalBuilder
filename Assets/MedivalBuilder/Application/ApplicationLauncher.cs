@@ -1,5 +1,6 @@
 ﻿using MedivalBuilder.Camera;
 using MedivalBuilder.Consts;
+using MedivalBuilder.Level;
 using MedivalBuilder.SceneObjectsStorage;
 
 namespace MedivalBuilder.Application
@@ -21,6 +22,10 @@ namespace MedivalBuilder.Application
             _sceneObjectStorage
                 .CreateFromResourcesAndAdd<CameraView>(
                     ResourcesConsts.CameraViewSource);
+            
+            _sceneObjectStorage
+                .CreateFromResourcesAndAdd<LevelView>(
+                    ResourcesConsts.LevelViewSource);
         }
     }
 }
