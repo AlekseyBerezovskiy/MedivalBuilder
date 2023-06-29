@@ -1,14 +1,16 @@
-﻿using MedivalBuilder.Characters.Interfaces;
+﻿using System;
+using MedivalBuilder.Characters.Interfaces;
 using MedivalBuilder.Characters.StateMachine.Interfaces;
 
 namespace MedivalBuilder.Characters.StateMachine
 {
     public abstract class CharacterState : ICharacterState
     {
+        public Action OnEnd { get; }
         public CharacterStateType StateType { get; }
-        public ICharacterAnimationController CharacterAnimationController { get; }
-        
-        public CharacterState(
+        protected ICharacterAnimationController CharacterAnimationController { get; }
+
+        protected CharacterState(
             CharacterStateType characterStateType,
             ICharacterAnimationController characterAnimationController)
         {

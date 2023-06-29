@@ -1,4 +1,4 @@
-﻿using MedivalBuilder.Characters.Inventory;
+﻿using MedivalBuilder.Inventory;
 using UnityEngine;
 
 namespace MedivalBuilder.Characters.Interfaces

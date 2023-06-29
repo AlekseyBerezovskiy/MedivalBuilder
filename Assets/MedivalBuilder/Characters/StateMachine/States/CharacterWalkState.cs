@@ -1,6 +1,4 @@
-﻿using System;
-using DG.Tweening;
-using MedivalBuilder.Characters.Factory;
+﻿using MedivalBuilder.Characters.Factory;
 using MedivalBuilder.Characters.Interfaces;
 using MedivalBuilder.Characters.Realization;
 using UnityEngine;
@@ -9,8 +7,6 @@ namespace MedivalBuilder.Characters.StateMachine.States
 {
     public class CharacterWalkState : CharacterState
     {
-        public event Action OnEndWalkEvent;
-        
         private CharacterView _characterView;
         private Vector3 _targetPosition;
         
@@ -55,7 +51,7 @@ namespace MedivalBuilder.Characters.StateMachine.States
 
         private void OnTriggerEnter(Collider collision)
         {
-            OnEndWalkEvent?.Invoke();
+            OnEnd?.Invoke();
         }
     }
 }
