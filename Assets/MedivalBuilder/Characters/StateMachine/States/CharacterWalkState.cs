@@ -1,31 +1,65 @@
-﻿using DG.Tweening;
-using MedivalBuilder.Characters.StateMachine.Interfaces;
+﻿using System;
+using DG.Tweening;
+using MedivalBuilder.Characters.Factory;
+using MedivalBuilder.Characters.Interfaces;
+using MedivalBuilder.Characters.Realization;
 using UnityEngine;
 
 namespace MedivalBuilder.Characters.StateMachine.States
 {
-    public class CharacterWalkState : ICharacterState
+    public class CharacterWalkState : CharacterState
     {
-        public CharacterStateType StateType { get; }
-
-        private Transform _characterTransform;
-        private float _speed;
+        public event Action OnEndWalkEvent;
+        
+        private CharacterView _characterView;
+        private CharactersData _charactersData;
         private Tween _moveTween;
+        private Vector3 _targetPosition;
         
-        public void Init(Transform characterTransform, float speed)
+        public CharacterWalkState(
+            CharacterStateType characterStateType,
+            ICharacterAnimationController characterAnimationController) 
+            : base(characterStateType, characterAnimationController)
+        { }
+        
+        public void Init(
+            CharacterView characterView, 
+            CharactersData charactersData)
         {
-            _characterTransform = characterTransform;
-            _speed = speed;
+            _characterView = characterView;
+            _charactersData = charactersData;
         }
         
-        public void OnEntry()
+        public override void OnEntry()
         {
-            //_moveTween = _characterTransform.DOMove()
+            if (_targetPosition != Vector3.zero)
+            {
+                CharacterAnimationController.SetAnimation(CharacterStateType.Walk);
+                
+                _moveTween = _characterView.transform.DOMove(
+                    _targetPosition,
+                    Vector3.Distance(
+                        _characterView.transform.position, 
+                        _targetPosition) 
+                    * _charactersData.Speed)
+                    .OnComplete(() =>
+                    {
+                        OnEndWalkEvent?.Invoke();
+                    });
+            }
         }
 
-        public void OnExit()
+        public override void OnExit()
         {
+            _targetPosition = Vector3.zero;
             
+            _moveTween?.Kill();
+            _moveTween = null;
+        }
+
+        public void SetTarget(Vector3 targetPosition)
+        {
+            _targetPosition = targetPosition;
         }
     }
 }

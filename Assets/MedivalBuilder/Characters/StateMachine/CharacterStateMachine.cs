@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using MedivalBuilder.Characters.Factory;
+using MedivalBuilder.Characters.Interfaces;
+using MedivalBuilder.Characters.Realization;
 using MedivalBuilder.Characters.StateMachine.Interfaces;
 using MedivalBuilder.Characters.StateMachine.States;
 using Stateless;
@@ -12,12 +15,19 @@ namespace MedivalBuilder.Characters.StateMachine
         private Dictionary<CharacterStateType, ICharacterState> _statesStorage =
             new Dictionary<CharacterStateType, ICharacterState>();
         private StateMachine<ICharacterState, CharacterStateType> _stateMachine;
+
+        private CharacterView _characterView;
+        private CharactersData _charactersData;
+        private ICharacterAnimationController _characterAnimationController;
         
         private readonly IInstantiator _instantiator;
         
-        public CharacterStateMachine(IInstantiator instantiator)
+        public CharacterStateMachine(
+            IInstantiator instantiator,
+            ICharacterAnimationController characterAnimationController)
         {
             _instantiator = instantiator;
+            _characterAnimationController = characterAnimationController;
             
             InitStateMachine();
         }
@@ -85,7 +95,7 @@ namespace MedivalBuilder.Characters.StateMachine
         
         private ICharacterState CreateModuleState(CharacterStateType stateType)
         {
-            var stateExtraArgs = new object[] {stateType};
+            var stateExtraArgs = new object[] {stateType, _characterAnimationController};
             
             switch (stateType)
             {

@@ -1,16 +1,21 @@
-﻿using MedivalBuilder.Characters.StateMachine.Interfaces;
+﻿using MedivalBuilder.Characters.Interfaces;
 
 namespace MedivalBuilder.Characters.StateMachine.States
 {
-    public class CharacterBuildState : ICharacterState
+    public class CharacterBuildState : CharacterState
     {
-        public CharacterStateType StateType { get; }
-        public void OnEntry()
+        public CharacterBuildState(
+            CharacterStateType characterStateType,
+            ICharacterAnimationController characterAnimationController) 
+            : base(characterStateType, characterAnimationController)
+        { }
+
+        public override void OnEntry()
         {
-            
+            CharacterAnimationController.SetAnimation(CharacterStateType.Build);
         }
 
-        public void OnExit()
+        public override void OnExit()
         {
             
         }

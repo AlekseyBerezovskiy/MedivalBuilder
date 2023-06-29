@@ -12,50 +12,47 @@ namespace MedivalBuilder.Characters
     public class CharacterController : ICharacterController
     {
         private readonly ICharacterStateMachine _characterStateMachine;
-        private readonly ICharacterAnimationController _characterAnimationController;
         private readonly CharacterView _characterView;
 
+        private CharacterWalkState _characterWalkState;
+        
         public CharacterController(
             ICharacterStateMachine characterStateMachine,
-            ICharacterAnimationController characterAnimationController,
             CharacterView characterView,
             CharactersData charactersData)
         {
             _characterStateMachine = characterStateMachine;
-            _characterAnimationController = characterAnimationController;
             _characterView = characterView;
-
+            
             Init(charactersData);
         }
         
         public void SetWalk(Vector3 targetPosition)
         {
-            _characterAnimationController.SetAnimation(CharacterStateType.Walk);
+            _characterWalkState.SetTarget(targetPosition);
+           
             _characterStateMachine.SwitchState(CharacterStateType.Walk);
         }
 
         public void SetIdle()
         {
-            _characterAnimationController.SetAnimation(CharacterStateType.Idle);
             _characterStateMachine.SwitchState(CharacterStateType.Idle);
         }
 
         public void SetBuild(float time)
         {
-            _characterAnimationController.SetAnimation(CharacterStateType.Build);
             _characterStateMachine.SwitchState(CharacterStateType.Build);
         }
 
         public void SetPickup(Item item)
         {
-            _characterAnimationController.SetAnimation(CharacterStateType.Pickup);
             _characterStateMachine.SwitchState(CharacterStateType.Pickup);
         }
 
         private void Init(CharactersData charactersData)
         {
-            var walkState = _characterStateMachine.GetState(CharacterStateType.Walk) as CharacterWalkState;
-            walkState?.Init(_characterView.transform, charactersData.Speed);
+            _characterWalkState = _characterStateMachine.GetState(CharacterStateType.Walk) as CharacterWalkState;
+            _characterWalkState.Init(_characterView, charactersData);
         }
     }
 }

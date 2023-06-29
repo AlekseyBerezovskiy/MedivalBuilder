@@ -1,16 +1,21 @@
-﻿using MedivalBuilder.Characters.StateMachine.Interfaces;
+﻿using MedivalBuilder.Characters.Interfaces;
 
 namespace MedivalBuilder.Characters.StateMachine.States
 {
-    public class CharacterPickupState : ICharacterState
+    public class CharacterPickupState : CharacterState
     {
-        public CharacterStateType StateType { get; }
-        public void OnEntry()
+        public CharacterPickupState(
+            CharacterStateType characterStateType,
+            ICharacterAnimationController characterAnimationController) 
+            : base(characterStateType, characterAnimationController)
+        { }
+
+        public override void OnEntry()
         {
-            
+           CharacterAnimationController.SetAnimation(CharacterStateType.Pickup);
         }
 
-        public void OnExit()
+        public override void OnExit()
         {
             
         }

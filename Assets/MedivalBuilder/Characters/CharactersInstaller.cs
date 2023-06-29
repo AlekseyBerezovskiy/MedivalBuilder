@@ -1,4 +1,7 @@
-﻿using Zenject;
+﻿using MedivalBuilder.Characters.Factory;
+using MedivalBuilder.Characters.Realization;
+using MedivalBuilder.Consts;
+using Zenject;
 
 namespace MedivalBuilder.Characters
 {
@@ -6,7 +9,19 @@ namespace MedivalBuilder.Characters
     {
         public override void InstallBindings()
         {
-            
+            Container
+                .Bind<CharactersConfig>()
+                .FromScriptableObjectResource(ResourcesConsts.CharactersConfigSource)
+                .AsSingle();
+
+            Container
+                .Bind<CharacterView>()
+                .FromResources(ResourcesConsts.CharacterViewSource)
+                .AsSingle();
+
+            Container
+                .Bind<CharactersFactory>()
+                .AsSingle();
         }
     }
 }
