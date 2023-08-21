@@ -1,0 +1,15 @@
+﻿using MedivalBuilder.Inventory.Interfaces;
+using UnityEngine;
+using Zenject;
+
+namespace MedivalBuilder.Inventory
+{
+    public class ItemView : MonoBehaviour
+    {
+        [Inject]
+        private void Inject(IItemsStorage itemsStorage)
+        {
+            itemsStorage.Add(new Item(ItemType.Wood,this));
+        }
+    }
+}

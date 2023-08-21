@@ -1,10 +1,9 @@
-﻿using MedivalBuilder.Inventory;
+﻿using MedivalBuilder.Task.Realization;
 
 namespace MedivalBuilder.Task.Interfaces
 {
     public interface ITaskService
     {
-        void CreatePickupItemTask(Item item);
-        void CreateBuildingsTask();
+        void CreateBuildingsTask(BuildingsType buildingsType);
     }
 }

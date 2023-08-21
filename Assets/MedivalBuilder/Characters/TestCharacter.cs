@@ -1,5 +1,7 @@
 ﻿using MedivalBuilder.Inventory;
+using MedivalBuilder.Inventory.Interfaces;
 using MedivalBuilder.Task.Interfaces;
+using MedivalBuilder.Task.Realization;
 using UnityEngine;
 using Zenject;
 
@@ -7,11 +9,17 @@ namespace MedivalBuilder.Characters
 {
     public class TestCharacter : MonoBehaviour
     {
+        [SerializeField] private ItemView itemView;
+        
         private ITaskService _taskService;
+        private IItemsStorage _itemsStorage;
         
         [Inject]
-        private void Inject(ITaskService taskService)
+        private void Inject(
+            ITaskService taskService,
+            IItemsStorage itemsStorage)
         {
+            _itemsStorage = itemsStorage;
             _taskService = taskService;
         }
 
@@ -19,7 +27,10 @@ namespace MedivalBuilder.Characters
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                _taskService.CreatePickupItemTask(new Item());
+                var item = new Item(ItemType.Wood, itemView);
+                _itemsStorage.Add(item);
+                
+                _taskService.CreateBuildingsTask(BuildingsType.WoodenStorage);
             }
         }
     }

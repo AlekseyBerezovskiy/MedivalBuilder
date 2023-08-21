@@ -1,4 +1,6 @@
-﻿using MedivalBuilder.Characters;
+﻿using MedivalBuilder.Buildings;
+using MedivalBuilder.Characters;
+using MedivalBuilder.Inventory;
 using MedivalBuilder.Task;
 using Zenject;
 
@@ -10,7 +12,11 @@ namespace MedivalBuilder.Application
         {
             ApplicationModules.Install(Container);
             
+            InventoryInstaller.Install(Container);
+            
             TaskInstaller.Install(Container);
+            
+            BuildingsInstaller.Install(Container);
             
             CharactersInstaller.Install(Container);
             

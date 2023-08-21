@@ -1,4 +1,5 @@
-﻿using MedivalBuilder.Characters.Factory;
+﻿using System;
+using MedivalBuilder.Characters.Factory;
 using MedivalBuilder.Characters.Interfaces;
 using MedivalBuilder.Characters.Realization;
 using UnityEngine;
@@ -44,8 +45,9 @@ namespace MedivalBuilder.Characters.StateMachine.States
             _characterView.OnTriggerEnterEvent -= OnTriggerEnter;
         }
 
-        public void SetTarget(Vector3 targetPosition)
+        public void SetParameters(Vector3 targetPosition, Action onEnd)
         {
+            OnEnd += onEnd;
             _targetPosition = targetPosition;
         }
 

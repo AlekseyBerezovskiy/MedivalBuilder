@@ -1,39 +1,34 @@
-﻿using System;
-using MedivalBuilder.Inventory;
+﻿using MedivalBuilder.Characters.Interfaces;
 using MedivalBuilder.Task.Interfaces;
+using MedivalBuilder.Task.Realization;
 using Zenject;
 
 namespace MedivalBuilder.Task
 {
-    public class TaskService : ITaskService, ITickable, IDisposable
+    public class TaskService : ITaskService
     {
         private readonly TickableManager _tickableManager;
+        private readonly BuildingsTaskConfig _buildingsTaskConfig;
+        private readonly ICharactersStorage _charactersStorage;
+        private readonly IInstantiator _instantiator;
 
-        public TaskService(TickableManager tickableManager)
+        public TaskService(
+            BuildingsTaskConfig buildingsTaskConfig,
+            ICharactersStorage charactersStorage,
+            IInstantiator instantiator)
         {
-            _tickableManager = tickableManager;
-            
-            _tickableManager.Add(this);
-        }
-        
-        public void CreatePickupItemTask(Item item)
-        {
-            
-        }
-
-        public void CreateBuildingsTask()
-        {
-            
+            _buildingsTaskConfig = buildingsTaskConfig;
+            _charactersStorage = charactersStorage;
+            _instantiator = instantiator;
         }
 
-        public void Tick()
+        public void CreateBuildingsTask(BuildingsType buildingsType)
         {
-            
-        }
+            var buildData = _buildingsTaskConfig.GetNextBuildingsLevelData(buildingsType);
 
-        public void Dispose()
-        {
-            _tickableManager.Remove(this);
+            var characterController = _charactersStorage.Get();
+
+            _instantiator.Instantiate<CharactersBuildTask>(new object[] {buildData, characterController});
         }
     }
 }

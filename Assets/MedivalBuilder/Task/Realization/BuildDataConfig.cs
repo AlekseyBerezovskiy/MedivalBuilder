@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace MedivalBuilder.Task.Realization
 {
+    [CreateAssetMenu(fileName = "BuildDataConfig", menuName = "Config/BuildDataConfig")]
     public class BuildDataConfig : ScriptableObject
     {
         public BuildingsType BuildingsType;
@@ -14,10 +15,7 @@ namespace MedivalBuilder.Task.Realization
         {
             for (int i = 0; i < buildDatas.Count; i++)
             {
-                if (!buildDatas[i].IsCreated)
-                {
-                    return buildDatas[i];
-                }
+                return buildDatas[i];
             }
 
             return null;
@@ -27,7 +25,7 @@ namespace MedivalBuilder.Task.Realization
     [Serializable]
     public class BuildData
     {
-        public bool IsCreated;
+        public BuildingsType Type;
         public int WoodCost;
         public int StoneCost;
         public float BuildTime;

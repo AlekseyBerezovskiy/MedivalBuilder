@@ -6,5 +6,6 @@
         public const string LevelViewSource = "LevelView";
         public const string CharactersConfigSource = "CharactersConfig";
         public const string CharacterViewSource = "CharacterView";
+        public const string BuildTaskConfigSource = "BuildTaskConfig";
     }
 }

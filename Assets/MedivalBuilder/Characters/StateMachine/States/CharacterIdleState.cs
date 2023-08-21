@@ -1,4 +1,5 @@
-﻿using MedivalBuilder.Characters.Interfaces;
+﻿using Cysharp.Threading.Tasks;
+using MedivalBuilder.Characters.Interfaces;
 using Zenject;
 
 namespace MedivalBuilder.Characters.StateMachine.States

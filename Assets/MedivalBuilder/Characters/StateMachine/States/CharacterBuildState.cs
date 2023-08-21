@@ -1,5 +1,7 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
 using MedivalBuilder.Characters.Interfaces;
+using UnityEngine;
 
 namespace MedivalBuilder.Characters.StateMachine.States
 {
@@ -30,8 +32,9 @@ namespace MedivalBuilder.Characters.StateMachine.States
             _delayTween = null;
         }
 
-        public void SetTime(float timeToDone)
+        public void SetParameters(float timeToDone, Action onEnd)
         {
+            OnEnd += onEnd;
             _timeToDone = timeToDone;
         }
     }

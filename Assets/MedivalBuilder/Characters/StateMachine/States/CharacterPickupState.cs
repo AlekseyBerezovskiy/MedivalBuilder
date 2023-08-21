@@ -1,5 +1,7 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
 using MedivalBuilder.Characters.Interfaces;
+using MedivalBuilder.Characters.Inventory;
 using MedivalBuilder.Inventory;
 
 namespace MedivalBuilder.Characters.StateMachine.States
@@ -10,7 +12,8 @@ namespace MedivalBuilder.Characters.StateMachine.States
 
         private Tween _delayTween;
         private Item _item;
-        
+        private CharacterInventory _characterInventory; 
+
         public CharacterPickupState(
             CharacterStateType characterStateType,
             ICharacterAnimationController characterAnimationController) 
@@ -23,6 +26,10 @@ namespace MedivalBuilder.Characters.StateMachine.States
 
            _delayTween = DOVirtual.DelayedCall(PickupDelay, () =>
            {
+               _characterInventory.Item = _item;
+
+               _item = null;
+               
                OnEnd?.Invoke();
            });
         }
@@ -33,8 +40,14 @@ namespace MedivalBuilder.Characters.StateMachine.States
             _delayTween = null;
         }
 
-        public void SetItem(Item item)
+        public void Init(CharacterInventory characterInventory)
         {
+            _characterInventory = characterInventory;
+        }
+        
+        public void SetParameters(Item item, Action onEnd)
+        {
+            OnEnd = onEnd;
             _item = item;
         }
     }

@@ -57,6 +57,8 @@ namespace MedivalBuilder.Characters.StateMachine
             
             _stateMachine = new StateMachine<ICharacterState, CharacterStateType>(startState);
 
+            startState.OnEntry();
+            
             statesList.Add(startState);
 
             var enumValues = Enum.GetValues(typeof(CharacterStateType));
