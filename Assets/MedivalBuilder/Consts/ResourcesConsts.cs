@@ -7,5 +7,7 @@
         public const string CharactersConfigSource = "CharactersConfig";
         public const string CharacterViewSource = "CharacterView";
         public const string BuildTaskConfigSource = "BuildTaskConfig";
+        public const string ItemViewSource = "ItemView";
+        public const string ItemViewConfigSource = "ItemViewConfig";
     }
 }

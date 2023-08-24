@@ -1,17 +1,11 @@
-﻿using MedivalBuilder.Inventory.Interfaces;
-using UnityEngine;
-using Zenject;
+﻿using UnityEngine;
 
 namespace MedivalBuilder.Inventory
 {
     public class ItemView : MonoBehaviour
     {
-        [SerializeField] private ItemType itemType;
-
-        [Inject]
-        private void Inject(IItemsStorage itemsStorage)
-        {
-            itemsStorage.Add(new Item(itemType,this));
-        }
+        public MeshFilter MeshFilter => meshFilter;
+        
+        [SerializeField] private MeshFilter meshFilter;
     }
 }

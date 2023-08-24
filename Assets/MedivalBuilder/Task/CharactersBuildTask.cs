@@ -87,7 +87,7 @@ namespace MedivalBuilder.Task
                         target = _itemsStorage.Get(itemType, false).ItemView.transform;
                     }
                     
-                    _characterController.SetWalk(target.position, endCallback);
+                    _characterController.SetWalk(target, endCallback);
                     break;
                 case CharacterStateType.Pickup:
                     var itemTypeForPickup = (ItemType)_currentBuildAction.DoList[_iterator].DoData;

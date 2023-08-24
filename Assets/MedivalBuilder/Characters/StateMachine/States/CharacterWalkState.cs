@@ -9,7 +9,7 @@ namespace MedivalBuilder.Characters.StateMachine.States
     public class CharacterWalkState : CharacterState
     {
         private CharacterView _characterView;
-        private Vector3 _targetPosition;
+        private Transform _targetTransform;
         
         public CharacterWalkState(
             CharacterStateType characterStateType,
@@ -35,7 +35,7 @@ namespace MedivalBuilder.Characters.StateMachine.States
             
             _characterView.NavMeshAgent.isStopped = false;
             
-            _characterView.NavMeshAgent.SetDestination(_targetPosition);
+            _characterView.NavMeshAgent.SetDestination(_targetTransform.position);
         }
 
         public override void OnExit()
@@ -47,15 +47,21 @@ namespace MedivalBuilder.Characters.StateMachine.States
             _characterView.OnTriggerEnterEvent -= OnTriggerEnter;
         }
 
-        public void SetParameters(Vector3 targetPosition, Action onEnd)
+        public void SetParameters(Transform targetTransform, Action onEnd)
         {
             OnEnd += onEnd;
-            _targetPosition = targetPosition;
+            _targetTransform = targetTransform;
         }
 
         private void OnTriggerEnter(Collider collision)
         {
-            OnEnd?.Invoke();
+            var a = collision.transform.GetInstanceID();
+            var b = _targetTransform.GetInstanceID();
+            
+            if (collision.transform.GetInstanceID() == _targetTransform.GetInstanceID())
+            {
+                OnEnd?.Invoke();
+            }
         }
     }
 }

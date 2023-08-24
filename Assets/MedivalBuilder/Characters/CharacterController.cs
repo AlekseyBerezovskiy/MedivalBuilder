@@ -35,9 +35,9 @@ namespace MedivalBuilder.Characters
             Init(charactersData);
         }
         
-        public void SetWalk(Vector3 targetPosition, Action onEnd)
+        public void SetWalk(Transform targetTransform, Action onEnd)
         {
-            _characterWalkState.SetParameters(targetPosition, onEnd);
+            _characterWalkState.SetParameters(targetTransform, onEnd);
 
             _characterStateMachine.SwitchState(CharacterStateType.Walk);
         }
