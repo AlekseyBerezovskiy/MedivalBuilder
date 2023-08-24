@@ -3,6 +3,7 @@ using DG.Tweening;
 using MedivalBuilder.Characters.Interfaces;
 using MedivalBuilder.Characters.Inventory;
 using MedivalBuilder.Inventory;
+using MedivalBuilder.Inventory.Interfaces;
 
 namespace MedivalBuilder.Characters.StateMachine.States
 {
@@ -13,12 +14,17 @@ namespace MedivalBuilder.Characters.StateMachine.States
         private Tween _delayTween;
         private Item _item;
         private CharacterInventory _characterInventory; 
+        
+        private readonly IItemsStorage _itemsStorage;
 
         public CharacterPickupState(
             CharacterStateType characterStateType,
-            ICharacterAnimationController characterAnimationController) 
+            ICharacterAnimationController characterAnimationController,
+            IItemsStorage itemsStorage) 
             : base(characterStateType, characterAnimationController)
-        { }
+        {
+            _itemsStorage = itemsStorage;
+        }
 
         public override void OnEntry()
         {
@@ -27,6 +33,8 @@ namespace MedivalBuilder.Characters.StateMachine.States
            _delayTween = DOVirtual.DelayedCall(PickupDelay, () =>
            {
                _characterInventory.Item = _item;
+               
+               _itemsStorage.ResetItem(_item);
 
                _item = null;
                
@@ -36,6 +44,8 @@ namespace MedivalBuilder.Characters.StateMachine.States
 
         public override void OnExit()
         {
+            OnEnd = null;
+            
             _delayTween?.Kill();
             _delayTween = null;
         }

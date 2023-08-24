@@ -26,6 +26,8 @@ namespace MedivalBuilder.Characters.StateMachine.States
 
         public override void OnExit()
         {
+            OnEnd = null;
+            
             _tickableManager.Remove(this);
         }
 

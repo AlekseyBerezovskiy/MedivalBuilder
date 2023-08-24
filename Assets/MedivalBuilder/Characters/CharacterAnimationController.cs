@@ -13,9 +13,14 @@ namespace MedivalBuilder.Characters
         {
             _animator = animator;
         }
-        
+
         public void SetAnimation(CharacterStateType stateType)
         {
+            if (stateType == CharacterStateType.Put)
+            {
+                stateType = CharacterStateType.Pickup;
+            }
+
             _animator.SetTrigger(stateType.ToString());
         }
     }

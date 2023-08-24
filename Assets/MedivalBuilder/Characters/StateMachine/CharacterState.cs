@@ -6,7 +6,7 @@ namespace MedivalBuilder.Characters.StateMachine
 {
     public abstract class CharacterState : ICharacterState
     {
-        public Action OnEnd { set; get; }
+        public Action OnEnd { protected set; get; }
         public CharacterStateType StateType { get; }
         protected ICharacterAnimationController CharacterAnimationController { get; }
 

@@ -40,6 +40,8 @@ namespace MedivalBuilder.Characters.StateMachine.States
 
         public override void OnExit()
         {
+            OnEnd = null;
+            
             _characterView.NavMeshAgent.isStopped = true;
             
             _characterView.OnTriggerEnterEvent -= OnTriggerEnter;

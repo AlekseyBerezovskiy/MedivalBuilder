@@ -15,6 +15,6 @@ MonoBehaviour:
   BuildingsType: 0
   buildDatas:
   - Type: 0
-    WoodCost: 3
-    StoneCost: 0
+    WoodCost: 1
+    StoneCost: 1
     BuildTime: 5

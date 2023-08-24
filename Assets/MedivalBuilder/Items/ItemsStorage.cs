@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DG.Tweening;
 using MedivalBuilder.Inventory.Interfaces;
 
 namespace MedivalBuilder.Inventory
@@ -7,6 +8,8 @@ namespace MedivalBuilder.Inventory
     {
         private List<Item> _woodenItems = new List<Item>();
         private List<Item> _stoneItems = new List<Item>();
+
+        private const float ResetItemTime = 15f;
         
         public void Add(Item item)
         {
@@ -26,14 +29,18 @@ namespace MedivalBuilder.Inventory
             }
         }
 
-        public Item Get(ItemType itemType)
+        public Item Get(ItemType itemType, bool needToDeleteFromStorage)
         {
             if (itemType == ItemType.Stone)
             {
                 if (_stoneItems.Count > 0)
                 {
                     var item = _stoneItems[0];
-                    _stoneItems.RemoveAt(0);
+
+                    if (needToDeleteFromStorage)
+                    {
+                        _stoneItems.RemoveAt(0);
+                    }
                     return item;
                 }
             }
@@ -42,11 +49,27 @@ namespace MedivalBuilder.Inventory
                 if (_woodenItems.Count > 0)
                 {
                     var item = _woodenItems[0];
-                    _woodenItems.RemoveAt(0);
+                    
+                    if (needToDeleteFromStorage)
+                    {
+                        _woodenItems.Remove(item);
+                    }
                     return item;
                 }
             }
             return null;
+        }
+
+        public void ResetItem(Item item)
+        {
+            item.ItemView.gameObject.SetActive(false);
+
+            DOVirtual.DelayedCall(ResetItemTime, () =>
+            {
+                item.ItemView.gameObject.SetActive(true);
+                        
+                Add(item);
+            });
         }
     }
 }

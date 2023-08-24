@@ -1,15 +1,18 @@
 ﻿using System;
 using DG.Tweening;
 using MedivalBuilder.Characters.Interfaces;
+using MedivalBuilder.Characters.Inventory;
 
 namespace MedivalBuilder.Characters.StateMachine.States
 {
-    public class CharacterBuildState : CharacterState
+    public class CharacterPutState : CharacterState
     {
-        private float _timeToDone;
+        private const float PutDelay = 3f;
+
         private Tween _delayTween;
+        private CharacterInventory _characterInventory; 
         
-        public CharacterBuildState(
+        public CharacterPutState(
             CharacterStateType characterStateType,
             ICharacterAnimationController characterAnimationController) 
             : base(characterStateType, characterAnimationController)
@@ -17,10 +20,12 @@ namespace MedivalBuilder.Characters.StateMachine.States
 
         public override void OnEntry()
         {
-            CharacterAnimationController.SetAnimation(CharacterStateType.Build);
+            CharacterAnimationController.SetAnimation(CharacterStateType.Put);
 
-            _delayTween = DOVirtual.DelayedCall(_timeToDone, () =>
+            _delayTween = DOVirtual.DelayedCall(PutDelay, () =>
             {
+                _characterInventory.Item = null;
+
                 OnEnd?.Invoke();
             });
         }
@@ -33,10 +38,14 @@ namespace MedivalBuilder.Characters.StateMachine.States
             _delayTween = null;
         }
 
-        public void SetParameters(float timeToDone, Action onEnd)
+        public void Init(CharacterInventory characterInventory)
         {
-            OnEnd += onEnd;
-            _timeToDone = timeToDone;
+            _characterInventory = characterInventory;
+        }
+        
+        public void SetParameters(Action onEnd)
+        {
+            OnEnd = onEnd;
         }
     }
 }

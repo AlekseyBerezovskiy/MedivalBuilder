@@ -109,6 +109,8 @@ namespace MedivalBuilder.Characters.StateMachine
                     return _instantiator.Instantiate<CharacterPickupState>(stateExtraArgs);
                 case CharacterStateType.Build:
                     return _instantiator.Instantiate<CharacterBuildState>(stateExtraArgs);
+                case CharacterStateType.Put:
+                    return _instantiator.Instantiate<CharacterPutState>(stateExtraArgs);
             }
 
             return null;
@@ -120,6 +122,7 @@ namespace MedivalBuilder.Characters.StateMachine
         Idle,
         Walk,
         Build,
-        Pickup
+        Pickup,
+        Put
     }
 }

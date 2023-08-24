@@ -19,6 +19,7 @@ namespace MedivalBuilder.Characters
         private CharacterWalkState _characterWalkState;
         private CharacterBuildState _characterBuildState;
         private CharacterPickupState _characterPickupState;
+        private CharacterPutState _characterPutState;
         private CharacterInventory _characterInventory;
         
         public CharacterController(
@@ -57,6 +58,12 @@ namespace MedivalBuilder.Characters
             _characterPickupState.SetParameters(item, onEnd);
             _characterStateMachine.SwitchState(CharacterStateType.Pickup);
         }
+        
+        public void SetPut(Action onEnd)
+        {
+            _characterPutState.SetParameters(onEnd);
+            _characterStateMachine.SwitchState(CharacterStateType.Put);
+        }
 
         private void Init(CharactersData charactersData)
         {
@@ -64,6 +71,9 @@ namespace MedivalBuilder.Characters
             
             _characterPickupState = _characterStateMachine.GetState(CharacterStateType.Pickup) as CharacterPickupState;
             _characterPickupState.Init(_characterInventory);
+            
+            _characterPutState = _characterStateMachine.GetState(CharacterStateType.Put) as CharacterPutState;
+            _characterPutState.Init(_characterInventory);
             
             _characterWalkState = _characterStateMachine.GetState(CharacterStateType.Walk) as CharacterWalkState;
             _characterWalkState.Init(_characterView, charactersData);
